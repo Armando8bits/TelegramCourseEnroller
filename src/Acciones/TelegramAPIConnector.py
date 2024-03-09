@@ -8,43 +8,45 @@ class Orquestador:
         lastMessage=None
         parametros={}
         mensajes = []
+        LIMITE=5
+        print("> INICIANDO CONECCIÓN CON API DE TELEGRAM...")
         client = TelegramClient('anon', App_api_id, App_api_hash)
         await client.start()
         me = await client.get_me()
         async for dialog in client.iter_dialogs():
             if ChatTelegram == dialog.name:
-                print(dialog.name, 'has ID', dialog.id)
+                print(dialog.name, 'TIENE ID: ', dialog.id)
                 ID_chat=dialog.id
                 break
         #print(ChatTelegram)
         #print(ID_chat)
         if ID_chat is not None:
-            print("puedes continuar")
+            #print("puedes continuar")
             #verifica si hay registro del ultimo mensaje leido
             IdInicial = self.loadIdMessage()
 
             if IdInicial is None:
                 #parametros["channel_id"] = ID_chat
-                parametros["limit"] = 5
+                parametros["limit"] = LIMITE
                 parametros["reverse"] = True
-                print("voy a limitar a 5")
+                print("> NO SE ENCONTRÓ ARCHIVO 'log.tce' SE LEERAN LOS ÚLTIMOS {} MENSAJES",str(LIMITE))
             else:
                 #parametros["channel_id"] = ID_chat
                 parametros["offset_id"] = IdInicial
                 parametros["reverse"] = True
-                print("voy a traer segun el numero: "+str(IdInicial))
+                print("> SE CARGARÁN MENSAJES DESDE: "+str(IdInicial))
 
             # Obtiene los mensajes no leídos del chat
             async for message in client.iter_messages(ID_chat, **parametros):
                 mensajes.append(message)
                 lastMessage=message.id
+
+            print("> CARGA DE MENSAJES COMPLETA")
             
             if lastMessage is not None: self.saveIdMessage(lastMessage)
 
             #for item in mensajes: 
              #   print(item)
-        else:
-            print("NO puedes continuar")
         return mensajes
 
     def saveIdMessage(self, ID):

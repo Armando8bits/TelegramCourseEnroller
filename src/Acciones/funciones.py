@@ -56,6 +56,11 @@ def depurar(df):
     # Marcar con 1 las filas que contienen coincidencias
     df.loc[filas_coincidentes, 'NO_ES_DIGNO'] = 1
     total_Dignos = df[df['NO_ES_DIGNO'] != 1]['NO_ES_DIGNO'].count() #cuenta cuandos si son "interesantes"
+    total_Indignos = df[df['NO_ES_DIGNO'] == 1]['NO_ES_DIGNO'].count()
+    
+    print("> CURSOS DISPONIBLES PARA ENROLARSE: {}", str(total_Dignos))
+    print("> CURSOS NO INTERESANTES: {}", str(total_Indignos))
+
     if total_Dignos>0: dfLleno=True #si hay un interesante, se continua
     #print(df)
     return df, dfLleno
