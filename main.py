@@ -1,10 +1,11 @@
 #from src.Acciones import login
 from src.Acciones import credencial
+from src.Acciones import funciones as func
 #from login import Sesion
-from src.Acciones import orquestador
+from src.Acciones import TelegramAPIConnector
 import asyncio
 
-
+#empezar carga desde mensaje 29343
 # from selenium import webdriver
 # from selenium.webdriver.chrome.service import Service as ChromeService #para no estar descargando el chromedriver
 # from webdriver_manager.chrome import ChromeDriverManager
@@ -21,7 +22,9 @@ if credencial.Credencial.EsValida(): #si las credenciales son validas, inicia
     api_id=credencial.Credencial.GetApp_api_id()
     api_hash=credencial.Credencial.GetApp_api_hash()
     ChatTelegram=credencial.Credencial.GetAppChatTelegram()
-    asyncio.run( orquestador.Orquestador().Dirige(api_id, api_hash, ChatTelegram))
+    lista_cursos = asyncio.run( TelegramAPIConnector.Orquestador().GetMensajesCursos(api_id, api_hash, ChatTelegram))
+    if len(lista_cursos)>0:
+        x= func.GetDataOrga(lista_cursos)
     # input("***Presiona ENTER para cerrar el navegador...") #para evitar que se cierre al culminar el script
     # driver.quit()
 
