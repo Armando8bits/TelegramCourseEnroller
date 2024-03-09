@@ -18,6 +18,8 @@ class Orquestador:
                 print(dialog.name, 'TIENE ID: ', dialog.id)
                 ID_chat=dialog.id
                 break
+
+        await client.disconnect() #cierra cesión
         #print(ChatTelegram)
         #print(ID_chat)
         if ID_chat is not None:
