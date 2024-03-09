@@ -39,6 +39,7 @@ def GetDataOrga(lista_cursos):
     return df
 
 def depurar(df):
+    dfLleno=False
     filas_coincidentes = []
     temas_no_interes = []
     if existPreferences():
@@ -54,8 +55,10 @@ def depurar(df):
             filas_coincidentes.append(index)
     # Marcar con 1 las filas que contienen coincidencias
     df.loc[filas_coincidentes, 'NO_ES_DIGNO'] = 1
+    total_Dignos = df[df['NO_ES_DIGNO'] != 1]['NO_ES_DIGNO'].count() #cuenta cuandos si son "interesantes"
+    if total_Dignos>0: dfLleno=True #si hay un interesante, se continua
     #print(df)
-    return df
+    return df, dfLleno
 
 def ReadPreferences():
     temas_no_interes = []
