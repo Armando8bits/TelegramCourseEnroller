@@ -1,0 +1,6 @@
+--Esto es un comentario
+--Puedes escribir los comentarios que necesites
+--Siempre que empiecen con dos guiones
+--escribe cada tema que no te interece en cada linea, por ejemplo:
+tarot
+programaci�n neuroling��stica
